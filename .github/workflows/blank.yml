@@ -1,38 +1,24 @@
-name: Deploy Web La Lucha
+name: Prueba Basica CI
 
 on:
   push:
     branches: [ "main" ]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
-  build-and-deploy:
+  probando-build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Clonar repositorio
+      - name: Clonar el proyecto
         uses: actions/checkout@v4
 
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm install
 
-      - name: Compilar proyecto
+      - name: Verificar compilacion
         run: npm run build
-
-      - name: Subir artefacto para GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
-
-      - name: Desplegar en GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
